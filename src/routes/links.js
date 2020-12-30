@@ -3,6 +3,20 @@ const router= express.Router();
 
 const pool = require('../database');
 
+//PARA SER API
+router.get('/nurse', async (req, res) => {
+    const links = await pool.query('SELECT * FROM nurse', (err, rows, fields) => {
+        if(!err) {
+          res.json(rows);
+        } else {
+          console.log(err);
+        }
+      });  
+    });
+    //PARA SER CONECCION DE MISMO PROYECTO
+ /*    console.log(links);
+    res.render('links/list', { links });
+}); */
 router.get('/add', (req, res) => {
     res.render('links/add');
 });
@@ -22,19 +36,7 @@ router.post('/add', async (req, res) => {
     res.send('received');
 });
 
-router.get('/nurse', async (req, res) => {
-    const links = await pool.query('SELECT * FROM nurse', (err, rows, fields) => {
-        if(!err) {
-          res.json(rows);
-        } else {
-          console.log(err);
-        }
-      });  
-    });
-    
- /*    console.log(links);
-    //res.render('links/list', { links });
-}); */
+
 
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
